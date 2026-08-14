@@ -29,6 +29,7 @@ def load_model():
             "Make sure model.pkl is committed to your GitHub repo "
             "in the same folder as app.py."
         )
+        st.write("Files found in app folder:", os.listdir(BASE_DIR))
         st.stop()
     with open(MODEL_PATH, "rb") as f:
         model = pickle.load(f)
