@@ -1,7 +1,11 @@
+import os
 import pickle
 import numpy as np
 import pandas as pd
 import streamlit as st
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "model.pkl")
 
 # ------------------------------------------------------------------
 # Page setup
@@ -19,7 +23,14 @@ st.write(
 # ------------------------------------------------------------------
 @st.cache_resource
 def load_model():
-    with open("model.pkl", "rb") as f:
+    if not os.path.exists(MODEL_PATH):
+        st.error(
+            f"model.pkl not found at {MODEL_PATH}. "
+            "Make sure model.pkl is committed to your GitHub repo "
+            "in the same folder as app.py."
+        )
+        st.stop()
+    with open(MODEL_PATH, "rb") as f:
         model = pickle.load(f)
     return model
 
